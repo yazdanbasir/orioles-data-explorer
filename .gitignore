@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Environment — copy .env.example to .env and add your key
+backend/.env
+
+# Frontend dependencies
+frontend/node_modules/
+frontend/dist/
+
+# Database — not included in the repo; see README for how to obtain it
+*.db

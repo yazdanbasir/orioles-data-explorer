@@ -1,0 +1,497 @@
+/* ── Tokens ─────────────────────────────────────────────────────────────── */
+:root {
+  --orange:       #E85C0D;
+  --orange-dim:   #c44f0b;
+  --black:        #141414;
+  --surface:      #f7f7f6;
+  --white:        #ffffff;
+  --border:       #e0dedd;
+  --text:         #1a1a1a;
+  --text-muted:   #767676;
+  --row-hover:    #f0eeec;
+  --row-stripe:   #faf9f8;
+  --font-sans:    'IBM Plex Sans', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --radius:       5px;
+  --shadow:       0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-y: scroll;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+html, body, #root {
+  height: 100%;
+}
+
+.app-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-area {
+  width: 100%;
+  padding: 32px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Table section fills remaining height ───────────────────────────────── */
+.table-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.table-section .table-wrap {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.app-header {
+  background: var(--black);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  border-bottom: 2px solid var(--orange);
+  position: relative;
+}
+
+.app-header h1 {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.app-header h1 span {
+  color: var(--orange);
+}
+
+.header-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 28px;
+  width: auto;
+  pointer-events: none;
+}
+
+/* ── Tabs ───────────────────────────────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  gap: 2px;
+}
+
+.tab-btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 6px 0;
+  min-width: 72px;
+  text-align: center;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  background: transparent;
+  color: #999;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tab-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+}
+
+.tab-btn:disabled {
+  background: var(--orange);
+  color: var(--white);
+  cursor: default;
+}
+
+/* ── Schema view ────────────────────────────────────────────────────────── */
+.schema-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.schema-header {
+  flex-shrink: 0;
+  margin-bottom: 16px;
+}
+
+.schema-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.schema-section p {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.schema-section code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: #ebebea;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.schema-img-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.schema-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Table view ─────────────────────────────────────────────────────────── */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.table-toolbar label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-select:focus,
+.table-select:focus-visible,
+.table-select:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.table-select {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 32px 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23767676' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s;
+}
+
+.table-select:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: none;
+  -webkit-appearance: none;
+}
+
+.row-count {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ── Data table ─────────────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: var(--white);
+}
+
+.data-table {
+  width: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.data-table thead {
+  background: var(--black);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.data-table thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  text-align: center;
+  white-space: nowrap;
+  border-right: 1px solid #2a2a2a;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.data-table thead th:last-child {
+  border-right: none;
+}
+
+.data-table thead th:hover {
+  color: var(--white);
+}
+
+.data-table thead th.sorted {
+  color: var(--orange);
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--row-stripe);
+}
+
+.data-table tbody tr:hover {
+  background: var(--row-hover);
+}
+
+.data-table tbody td {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  color: var(--text);
+  text-align: center;
+}
+
+.data-table tbody td.null-val {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Query view ─────────────────────────────────────────────────────────── */
+.query-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.query-input-row {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.query-input {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.query-input:focus,
+.query-input:focus-visible {
+  outline: none !important;
+  -webkit-appearance: none;
+  border-color: var(--orange);
+}
+
+.query-btn {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 24px;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.query-btn:hover:not(:disabled) { background: var(--orange-dim); }
+.query-btn:disabled { opacity: 0.6; cursor: default; }
+
+.query-examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.query-examples-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-right: 2px;
+}
+
+.example-chip {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--white);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.example-chip:hover {
+  border-color: var(--orange);
+  color: var(--text);
+}
+
+.query-error {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #c0392b;
+  background: #fdf0ef;
+  border: 1px solid #f5c6c2;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  white-space: pre-wrap;
+  flex-shrink: 0;
+}
+
+.query-results {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.query-results .table-wrap {
+  width: fit-content;
+  max-width: 100%;
+  overflow: auto;
+  flex-shrink: 0;
+}
+
+.query-sql {
+  flex-shrink: 0;
+  background: var(--black);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+
+.sql-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #666;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.query-sql pre {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #d4d4d4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.query-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ── End of table ───────────────────────────────────────────────────────── */
+.end-of-table {
+  text-align: center;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── Loading ────────────────────────────────────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 40px 0;
+}
+
+.loading-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  border-radius: 50%;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1); }
+}
