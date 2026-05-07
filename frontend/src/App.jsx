@@ -25,7 +25,7 @@ export default function App() {
         </nav>
       </header>
 
-      <main className={`content-area${tab === 'query' ? ' content-area--scroll' : ''}`}>
+      <main className="content-area">
         {tab === 'query'  && <QueryView />}
         {tab === 'schema' && <SchemaView />}
         {tab === 'data'   && <TableView />}

@@ -312,14 +312,13 @@ html, body, #root {
 }
 
 /* ── Query view ─────────────────────────────────────────────────────────── */
-.content-area--scroll {
-  overflow-y: auto;
-}
-
 .query-section {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
   gap: 16px;
+  overflow: hidden;
 }
 
 .query-input-row {
@@ -417,13 +416,18 @@ html, body, #root {
 .query-results {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
   gap: 12px;
+  overflow: hidden;
 }
 
 .query-results .table-wrap {
+  flex: 1;
+  min-height: 0;
   width: fit-content;
   max-width: 100%;
-  overflow-x: auto;
+  overflow: auto;
 }
 
 .query-sql {
