@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "../../data/orioles.db")
+DB_PATH = os.path.join(os.path.dirname(__file__), "../../submission/data/orioles.db")
 
 VALID_TABLES = {"games", "teams", "players", "pitches", "at_bats"}
 
